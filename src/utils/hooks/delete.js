@@ -7,11 +7,9 @@ const userDelete = (id_usuario) => {
       id_usuario +
       "",
     requestOptions
-  )
-    .then(() => {
-      console.log("sucess");
-    })
-    .catch((error) => console.log("error", error));
+  ).then(() => {
+    console.log("sucess");
+  });
 };
 
 export default userDelete;
