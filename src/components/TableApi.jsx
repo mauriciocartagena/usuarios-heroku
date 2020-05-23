@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Table, Button, Modal, Form, Container } from "react-bootstrap";
-// import useInitialState from "../utils/hooks/useInitalState";
 import userDelete from "../utils/hooks/delete";
 import userUpdate from "../utils/hooks/update";
 import userInsert from "../utils/hooks/Insert";
-// const API = "https://heroku-usuarios-api.herokuapp.com/usuarios";
 
 class TableApi extends Component {
   constructor(props) {
