@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import { Table, Button, Modal, Form, Container } from "react-bootstrap";
-import userDelete from "../utils/hooks/delete";
-import userUpdate from "../utils/hooks/update";
-import userInsert from "../utils/hooks/Insert";
 
 class TableApi extends Component {
   constructor(props) {
@@ -10,7 +7,7 @@ class TableApi extends Component {
 
     this.state = {
       usuarios: [],
-      stado: false,
+      stado: null,
       id_usuario: 0,
       nombre: "",
       apellido_paterno: "",
@@ -20,7 +17,12 @@ class TableApi extends Component {
       direccion: "",
     };
   }
+
   componentDidMount() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
     fetch("https://heroku-usuarios-api.herokuapp.com/usuarios")
       .then((response) => {
         return response.json();
@@ -31,6 +33,78 @@ class TableApi extends Component {
   }
 
   render() {
+    const userUpdate = (
+      id_user,
+      name,
+      lastName,
+      secondName,
+      ci,
+      gender,
+      city
+    ) => {
+      var requestOptions = {
+        method: "PUT",
+        redirect: "follow",
+      };
+      fetch(
+        "https://heroku-usuarios-api.herokuapp.com/usuarios/update/" +
+          id_user +
+          "/" +
+          name +
+          "/" +
+          lastName +
+          "/" +
+          secondName +
+          "/" +
+          ci +
+          "/" +
+          gender +
+          "/" +
+          city +
+          "/",
+        requestOptions
+      )
+        .then(() => this.loadUsers())
+        .catch((error) => console.log("error", error));
+    };
+    const userDelete = (id_usuario) => {
+      var requestOptions = {
+        method: "DELETE",
+      };
+      fetch(
+        "https://heroku-usuarios-api.herokuapp.com/usuarios/delete/" +
+          id_usuario +
+          "",
+        requestOptions
+      )
+        .then(() => {
+          this.loadUsers();
+        })
+        .catch((error) => console.log("error", error));
+    };
+    const userInsert = (name, lastName, secondName, ci, gender, city) => {
+      var requestOptions = {
+        method: "POST",
+        redirect: "follow",
+      };
+      fetch(
+        "https://heroku-usuarios-api.herokuapp.com/usuarios/" +
+          name +
+          "/" +
+          lastName +
+          "/" +
+          secondName +
+          "/" +
+          ci +
+          "/" +
+          gender +
+          "/" +
+          city,
+        requestOptions
+      )
+        .then(() => this.loadUsers())
+        .catch((error) => console.log("error", error));
+    };
     return this.state.usuarios === 0 ? (
       <h1>Loading....</h1>
     ) : (
@@ -41,6 +115,7 @@ class TableApi extends Component {
         >
           Agregar
         </Button>
+
         <Table striped bordered responsive hover variant="dark">
           <thead>
             <tr>
@@ -99,7 +174,7 @@ class TableApi extends Component {
               ))}
           </tbody>
           {this.state.stado === true ? (
-            <Modal show={true}>
+            <Modal show={this.state.stado}>
               <Modal.Header
                 closeButton
                 onClick={() => this.setState({ stado: false })}
