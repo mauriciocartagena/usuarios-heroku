@@ -13,7 +13,7 @@ class TableApi extends Component {
       apellido_paterno: "",
       apellido_materno: "",
       ci: "",
-      genero: "",
+      genero: "Femenino",
       direccion: "",
     };
   }
@@ -65,6 +65,18 @@ class TableApi extends Component {
         requestOptions
       )
         .then(() => this.loadUsers())
+        .then(() =>
+          this.setState({
+            stado: false,
+            id_usuario: 0,
+            nombre: "",
+            apellido_paterno: "",
+            apellido_materno: "",
+            ci: "",
+            genero: "Femenino",
+            direccion: "",
+          })
+        )
         .catch((error) => console.log("error", error));
     };
     const userDelete = (id_usuario) => {
@@ -103,6 +115,18 @@ class TableApi extends Component {
         requestOptions
       )
         .then(() => this.loadUsers())
+        .then(() =>
+          this.setState({
+            stado: false,
+            id_usuario: 0,
+            nombre: "",
+            apellido_paterno: "",
+            apellido_materno: "",
+            ci: "",
+            genero: "Femenino",
+            direccion: "",
+          })
+        )
         .catch((error) => console.log("error", error));
     };
     return this.state.usuarios === 0 ? (
@@ -177,7 +201,18 @@ class TableApi extends Component {
             <Modal show={this.state.stado}>
               <Modal.Header
                 closeButton
-                onClick={() => this.setState({ stado: false })}
+                onClick={() =>
+                  this.setState({
+                    stado: false,
+                    id_usuario: 0,
+                    nombre: "",
+                    apellido_paterno: "",
+                    apellido_materno: "",
+                    ci: "",
+                    genero: "Femenino",
+                    direccion: "",
+                  })
+                }
               >
                 <Modal.Title>Modal heading</Modal.Title>
               </Modal.Header>
@@ -260,7 +295,7 @@ class TableApi extends Component {
                           apellido_paterno: "",
                           apellido_materno: "",
                           ci: "",
-                          genero: "",
+                          genero: "Femenino",
                           direccion: "",
                         });
                       }}
